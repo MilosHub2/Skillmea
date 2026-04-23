@@ -1,0 +1,10 @@
+{
+"compilerOptions": {
+"target": "ESNext",
+"module": "commonjs",
+"types": ["node"], // 🔴 toto ti opraví process
+"strict": true,
+"esModuleInterop": true
+},
+"include": ["**/*.ts"]
+}
