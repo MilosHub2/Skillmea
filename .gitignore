@@ -14,4 +14,4 @@ loginAuth.json/
 tests/authentication.spec.ts
 global-setup.ts
 we-didnt-listen-randy-marsh.gif
-loginAuth.json
+test-results.json
