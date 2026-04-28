@@ -11,3 +11,7 @@ allure-results/
 screenshots/
 tests/**/*.ts-snapshots/
 loginAuth.json/
+tests/authentication.spec.ts
+global-setup.ts
+we-didnt-listen-randy-marsh.gif
+loginAuth.json
