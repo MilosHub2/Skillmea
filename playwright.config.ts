@@ -1,5 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import { on } from 'events';
 
 /**
  * Read environment variables from file.
@@ -13,6 +12,7 @@ import { on } from 'events';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  globalSetup: './global-setup.ts',
   testDir: './tests',
   /* Run tests in files in parallel */
   timeout: 30 * 1000,
@@ -32,6 +32,7 @@ export default defineConfig({
 ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    storageState: 'loginAuth.json',
     baseURL: 'http://google.com',
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
@@ -63,10 +64,10 @@ export default defineConfig({
     // },
 
     /* Test against mobile viewports. */
-    {
-      name: 'iPhone',
-      use: { ...devices['iPhone 15 Pro'] },
-    },
+    // {
+    //   name: 'iPhone',
+    //   use: { ...devices['iPhone 15 Pro'] },
+    // },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },

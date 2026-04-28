@@ -9,3 +9,5 @@ node_modules/
 allure-report/
 allure-results/
 screenshots/
+tests/**/*.ts-snapshots/
+loginAuth.json/

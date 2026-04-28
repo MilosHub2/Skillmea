@@ -1,5 +1,4 @@
-import test, {expect} from '../fixtures/basePages';
-import { LoginPage } from '../page-objects/LoginPage';
+import {test, expect} from '../fixtures/basePages';
 
 test.describe('Login', () => {
 

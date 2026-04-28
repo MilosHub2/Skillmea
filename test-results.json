@@ -1,0 +1,169 @@
+{
+  "config": {
+    "configFile": "C:\\IT_learn\\Playwright\\Project\\playwright.config.ts",
+    "rootDir": "C:/IT_learn/Playwright/Project/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\IT_learn\\Playwright\\Project\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "open": "always"
+        }
+      ],
+      [
+        "C:\\IT_learn\\Playwright\\Project\\node_modules\\allure-playwright\\dist\\cjs\\index.js",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/IT_learn/Playwright/Project/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/IT_learn/Playwright/Project/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "3way",
+    "version": "1.56.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "consoleLog.spec.ts",
+      "file": "consoleLog.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Console log errors",
+          "file": "consoleLog.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Page has no error or logs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 6081,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m7\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m7\u001b[39m\n    at C:\\IT_learn\\Playwright\\Project\\tests\\consoleLog.spec.ts:19:34",
+                        "location": {
+                          "file": "C:\\IT_learn\\Playwright\\Project\\tests\\consoleLog.spec.ts",
+                          "column": 34,
+                          "line": 19
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 17 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'https://www.aktuality.sk/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 18 |\u001b[39m         console\u001b[33m.\u001b[39mlog(logs)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         expect\u001b[33m.\u001b[39msoft(logs\u001b[33m.\u001b[39mlength)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m         console\u001b[33m.\u001b[39mlog(errors)\u001b[33m;\u001b[39m\n \u001b[90m 21 |\u001b[39m         expect(errors\u001b[33m.\u001b[39mlength)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m         })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\IT_learn\\Playwright\\Project\\tests\\consoleLog.spec.ts",
+                            "column": 34,
+                            "line": 19
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m7\u001b[39m\n\n\u001b[0m \u001b[90m 17 |\u001b[39m         \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'https://www.aktuality.sk/'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 18 |\u001b[39m         console\u001b[33m.\u001b[39mlog(logs)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         expect\u001b[33m.\u001b[39msoft(logs\u001b[33m.\u001b[39mlength)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m         console\u001b[33m.\u001b[39mlog(errors)\u001b[33m;\u001b[39m\n \u001b[90m 21 |\u001b[39m         expect(errors\u001b[33m.\u001b[39mlength)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m         })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\IT_learn\\Playwright\\Project\\tests\\consoleLog.spec.ts:19:34\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[\n  {\n    message: An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.,\n    type: \u001b[32m'warning'\u001b[39m\n  },\n  {\n    message: An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.,\n    type: \u001b[32m'warning'\u001b[39m\n  },\n  {\n    message: Messaging without detection successfully executed.,\n    type: \u001b[32m'log'\u001b[39m\n  },\n  { message: execute init, type: \u001b[32m'log'\u001b[39m },\n  {\n    message: Could not find Google Analytics Interface. {label: file, gtag: gtag},\n    type: \u001b[32m'log'\u001b[39m\n  },\n  { message: Provider's accounts list is empty., type: \u001b[32m'error'\u001b[39m },\n  {\n    message: JQMIGRATE: Migrate is installed, version 1.4.1,\n    type: \u001b[32m'log'\u001b[39m\n  }\n]\n"
+                        },
+                        {
+                          "text": "[]\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-27T21:27:15.539Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\IT_learn\\Playwright\\Project\\test-results\\consoleLog-Console-log-errors-Page-has-no-error-or-logs-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\IT_learn\\Playwright\\Project\\test-results\\consoleLog-Console-log-errors-Page-has-no-error-or-logs-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\IT_learn\\Playwright\\Project\\tests\\consoleLog.spec.ts",
+                        "column": 34,
+                        "line": 19
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b2494fe3686723b95100-efc57d719d394f7ef136",
+              "file": "consoleLog.spec.ts",
+              "line": 5,
+              "column": 10
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-27T21:27:14.658Z",
+    "duration": 7697.833000000566,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
