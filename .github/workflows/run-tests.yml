@@ -29,7 +29,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test          #spusteni Playwright testu 
 
-      - use: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         if: always()                         #nahrani vysledku testu jako artefakt pro dalsi analyzu, pouziva se akce upload-artifact a podminka always() zajistuje, ze se tento krok provede i v pripade nezdaru testu  
         with:
           name: playwright-report
