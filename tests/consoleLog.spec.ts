@@ -2,7 +2,7 @@ import {test, expect} from '../fixtures/basePages';
 
 test.describe('Console log errors', () => {
 
-    test.only('Page has no error or logs', async ({page}) => {
+    test('Page has no error or logs', async ({page}) => {
 
         const logs = [] as any;                                     // as any pole logs sa interpretuje ako pole do ktoreho mozu byt vlozene lubovolne typy hodnot
         page.on('console', (message) => {                           //argument console ze budeme pocuvat na udalosti zobrazujuce spravy v konzole

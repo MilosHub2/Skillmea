@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "allTests": "playwright test"
+    "allTests": "playwright test",
+    "prodTests": "cross-env ENV=prod playwright test",
+    "localTests": "cross-env ENV=local playwright test"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,10 @@
     "@playwright/test": "^1.56.0",
     "@types/node": "^24.12.2",
     "allure-commandline": "^2.38.1",
-    "allure-playwright": "^3.7.1"
+    "allure-playwright": "^3.7.1",
+    "cross-env": "^10.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }
