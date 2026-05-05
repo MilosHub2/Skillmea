@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Check out project
-        uses: actions/checkout@v4     #checkout projektu z repozitare a jeho zkopirovani do pracovniho adresare pro dalsi kroky
+        uses: actions/checkout@v5     #checkout projektu z repozitare a jeho zkopirovani do pracovniho adresare pro dalsi kroky
 
       - name: Install Node.js
-        uses: actions/setup-node@v4   #instalace Node.js pro beh testu a puziva akci setup-node, ktera umoznuje nastavit verzi Node.js pro dalsi kroky
+        uses: actions/setup-node@v6   #instalace Node.js pro beh testu a puziva akci setup-node, ktera umoznuje nastavit verzi Node.js pro dalsi kroky
         with:
           node-version: "18"
 
@@ -29,7 +29,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test          #spusteni Playwright testu 
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()                         #nahrani vysledku testu jako artefakt pro dalsi analyzu, pouziva se akce upload-artifact a podminka always() zajistuje, ze se tento krok provede i v pripade nezdaru testu  
         with:
           name: playwright-report
