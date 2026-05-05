@@ -18,8 +18,9 @@ test('get started link', async ({ page }) => {
 });
 
 test('skusam napisat test', async ({page}) => {
-  await page.goto('/');
+  await page.goto('https://www.google.sk/');
   await expect(page).toHaveTitle('Google');
+  await page.getByRole('button', { name: 'Přijmout vše' }).click();
   await page.locator('//textarea[@class="gLFyf"]').fill('Trump');
-  await page.locator('/input[@class="gNO89b"]').click();
+  await page.locator('//textarea[@class="gLFyf"]').click();
 });

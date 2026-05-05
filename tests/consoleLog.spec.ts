@@ -14,7 +14,7 @@ test.describe('Console log errors', () => {
             errors.push(exception);
         });
 
-        await page.goto('https://www.aktuality.sk/');
+        await page.goto('https://demoqa.com/');
         console.log(logs);
         expect.soft(logs.length).toBe(0);
         console.log(errors);

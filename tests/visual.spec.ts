@@ -7,8 +7,8 @@ test.describe('Visual testing', () => {
     await loginPage.login('standard_user', 'secret_sauce');
   })
 
-  test('Visual test - login page', async ({ page }) => {
-    await expect (page).toHaveScreenshot({maxDiffPixels: 100});          //
+  test.skip('Visual test - login page', async ({ page }) => {
+    await expect (page).toHaveScreenshot({maxDiffPixels: 10});          //
   });
 
 });

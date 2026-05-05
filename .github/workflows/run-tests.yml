@@ -24,7 +24,7 @@ jobs:
         run: npm ci                           #cista instalace zavislosti projektu z package-lock.json, ktera zajistuje konzistentni instalaci a rychlejsi beh testu
 
       - name: Install Playwright
-        run: npx playwright install --with-deps  #instalace Playwrightu a jeho zavislosti pro beh testu, pouziva se prikaz npx pro spusteni lokalniho balicku Playwright
+        run: npx playwright install          #instalace Playwrightu
 
       - name: Run Playwright tests
         run: npx playwright test          #spusteni Playwright testu 
