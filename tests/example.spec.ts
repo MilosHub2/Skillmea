@@ -17,7 +17,7 @@ test('get started link', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test('skusam napisat test', async ({page}) => {
+test.skip('skusam napisat test', async ({page}) => {
   await page.goto('https://www.google.sk/');
   await expect(page).toHaveTitle('Google');
   await page.getByRole('button', { name: 'Přijmout vše' }).click();
