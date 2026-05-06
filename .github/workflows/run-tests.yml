@@ -27,7 +27,9 @@ jobs:
         run: npx playwright install          #instalace Playwrightu
 
       - name: Run Playwright tests
-        run: SLACK_BOT_USER_OAUTH_TOKEN=${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }} npx playwright test          #spusteni Playwright testu 
+        env:
+            SLACK_BOT_USER_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }},
+        run: npx playwright test                                                         #spusteni Playwright testu 
 
       - uses: actions/upload-artifact@v7
         if: always()                         #nahrani vysledku testu jako artefakt pro dalsi analyzu, pouziva se akce upload-artifact a podminka always() zajistuje, ze se tento krok provede i v pripade nezdaru testu  
