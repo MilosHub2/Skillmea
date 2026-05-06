@@ -33,7 +33,22 @@ export default defineConfig({
   reporter: [
   ['html', { open: 'always' }],   // HTML report, nemusí sa automaticky otvárať
   ['allure-playwright'],  
-  ['json', { outputFile: 'test-results.json' }]  // JSON report do súboru
+  ['json', { outputFile: 'test-results.json' }],  // JSON report do súboru
+  [
+    "./node_modules/playwright-slack-report/dist/src/SlackReporter.js",
+    {
+      channels: ['#all-milosslack'],  // Slack kanál pro odesílání zpráv
+      sendResults: 'always',
+      meta:[
+        { key: 'Merged to branch',
+          value: `${process.env.GITHUB_REF_NAME}`
+        },
+        { key: 'Author',
+          value: `${process.env.GITHUB_ACTOR}`
+        }
+      ]
+    }    
+  ]  
 ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
