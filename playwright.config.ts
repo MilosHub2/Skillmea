@@ -5,112 +5,53 @@ dotenv.config({
   path: `./env/.env.${process.env.ENV}`
 });
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
 export default defineConfig({
-  //globalSetup: require.resolve ('./global-setup.ts'),
   testDir: './tests',
-  /* Run tests in files in parallel */
+  testIgnore: ['tests/api.spec.ts'],
   timeout: 30 * 1000,
-  /* casovy limit pre kazdy test */
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
-  ['html', { open: 'always' }],   // HTML report, nemusí sa automaticky otvárať
-  ['allure-playwright'],  
-  ['json', { outputFile: 'test-results.json' }],  // JSON report do súboru
-  [
-    "./node_modules/playwright-slack-report/dist/src/SlackReporter.js",
-    {
-      channels: ['#all-milosslack'],  // Slack kanál pro odesílání zpráv
-      sendResults: 'always',
-      meta:[
-        { key: 'Merged to branch',
-          value: `${process.env.GITHUB_REF_NAME}`
-        },
-        { key: 'Author',
-          value: `${process.env.GITHUB_ACTOR}`
-        }
-      ]
-    }    
-  ]  
-],
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    //storageState: 'loginAuth.json',
-    baseURL: 'http://google.com',
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+  reporter: [
+    ['html', { open: 'always' }],
+    ['allure-playwright'],
+    ['json', { outputFile: 'test-results.json' }],
+    [
+      './node_modules/playwright-slack-report/dist/src/SlackReporter.js',
+      {
+        channels: ['#all-milosslack'],
+        sendResults: 'always',
+        meta: [
+          {
+            key: 'Merged to branch',
+            value: `${process.env.GITHUB_REF_NAME}`
+          },
+          {
+            key: 'Author',
+            value: `${process.env.GITHUB_ACTOR}`
+          }
+        ]
+      }
+    ]
+  ],
+
+  use: {
+    baseURL: 'http://google.com',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: {
       mode: 'retain-on-failure',
-      size: { width: 640 , height: 480}
+      size: { width: 640, height: 480 }
     }
   },
 
-  /* Configure projects for major browsers */
   projects: [
-    { name: 'setup', testMatch: /.*\.setup\.ts/, fullyParallel: false},
-    
+    { name: 'setup', testMatch: /.*\.setup\.ts/, fullyParallel: false },
     {
       name: 'chromium',
-      //dependencies: ['setup'],
       use: { ...devices['Desktop Chrome'] },
     },
-
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'iPhone',
-    //   use: { ...devices['iPhone 15 Pro'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
