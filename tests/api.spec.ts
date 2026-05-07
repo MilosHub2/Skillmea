@@ -16,7 +16,7 @@ test.describe('API tests @api', () => {
         console.log(JSON.stringify(body)); // Prevedie javasceriptový objekt na řetězec JSON a vypíše ho do konzole
     });
 
-    test('Get request with params', async ({ request}) => {
+    test('Get request with params @api', async ({ request}) => {
         const response = await request.get("/booking", {
             params: {
                 firstname: 'John', 
@@ -28,7 +28,7 @@ test.describe('API tests @api', () => {
         console.log(await response.json());
     });
 
-    test('Post - create booking', async ({ request }) => {
+    test('Post - create booking @api', async ({ request }) => {
         const response = await request.post("/booking", {
             data: {
                 "firstname" : "Jim",
@@ -51,7 +51,7 @@ test.describe('API tests @api', () => {
         expect(responseBody.booking).toHaveProperty("totalprice", 111);
     });
 
-    test('Post - dynamic data', async ({ request }) => {
+    test('Post - dynamic data @api', async ({ request }) => {
         const response = await request.post("/booking", {
             data: {
                 "firstname" : randomFirstName,
@@ -74,7 +74,7 @@ test.describe('API tests @api', () => {
         expect(responseBody.booking).toHaveProperty("totalprice", randomNumbner);
     });
 
-    test('Update the booking detals', async ({ request }) => {
+    test('Update the booking detals @api', async ({ request }) => {
         const response = await request.post("/auth", {
             data: {
                 "username" : "admin",   
@@ -118,7 +118,7 @@ test.describe('API tests @api', () => {
         expect(updatedResponseBody).toHaveProperty("totalprice", 66);
     });
 
-    test('Delete the booking detail', async ({ request }) => {
+    test('Delete the booking detail @api', async ({ request }) => {
         const response = await request.post("/auth", {
             data: {
                 "username" : "admin",   
@@ -146,7 +146,7 @@ test.describe('API tests @api', () => {
         expect(deleteRequest.statusText()).toBe("Created");
     });
 
-    test.only('Block requests', async ({ page, context }) => {
+    test.only('Block requests @api', async ({ page, context }) => {
         await context.route(/\.(jpg|png|css)$/, route => route.abort());  //  await context.route s regex kod na blokovanie načítania obrázkov (jpg a png) a route.abort() pro zablokování těchto požadavků
         await page.goto("/");                                           // kzada url s priponou.jpg alebo .png a tieto požadavky budou zablokovány, což může zrychlit načítání stránky a snížit spotřebu dat.
         await page.waitForURL("/");
