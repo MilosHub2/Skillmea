@@ -6,7 +6,8 @@
   "scripts": {
     "allTests": "playwright test",
     "prodTests": "cross-env ENV=prod playwright test",
-    "localTests": "cross-env ENV=local playwright test"
+    "localTests": "cross-env ENV=local playwright test",
+    "test:api": "playwright test --config=api.config.ts --project=chromium --grep @api"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "cross-env": "^10.1.0"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "dotenv": "^17.4.2",
     "playwright-slack-report": "^1.1.110"
   }

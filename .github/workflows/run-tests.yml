@@ -9,6 +9,10 @@ on:
 
 jobs:
   test:
+    strategy:
+        fail-fast: false;             #nastaveni strategie pro beh testu, fail-fast: false zajistuje, ze se vsechny shardy spusti i v pripade, ze nektery z nich selze, coz umoznuje ziskat kompletní obraz o stavu testu a identifikovat vsechny problemy bez ohledu na poradi spusteni
+        matrix:
+          shard: [1/4, 2/4, 3/4, 4/4]   #definice matice pro rozdeleni testu do ctyr shardu, kazdy shard bude obsahovat urcitou cast testu pro paralelni beh a zrychleni testovani
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +33,7 @@ jobs:
       - name: Run Playwright tests
         env:
             SLACK_BOT_USER_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }}
-        run: npx playwright test                                                         #spusteni Playwright testu 
+        run: npx playwright  --grep-invert@api --shard ${{ matrix.shard }}                       #spusteni Playwright testu 
 
       - uses: actions/upload-artifact@v7
         if: always()                         #nahrani vysledku testu jako artefakt pro dalsi analyzu, pouziva se akce upload-artifact a podminka always() zajistuje, ze se tento krok provede i v pripade nezdaru testu  
