@@ -1,19 +1,23 @@
-import { expect, test} from '@playwright/test';
-import { faker } from '@faker-js/faker';
+import { expect, test } from '@playwright/test';
 
-var token;
+let token: string;
+let randomFirstName: string;
+let randomLastName: string;
+let randomNumbner: number;
 
 test.describe('API tests @api', () => {
-
-    const randomFirstName = faker.person.firstName();
-    const randomLastName = faker.person.lastName();
-    const randomNumbner = faker.number.int(50);
+    test.beforeAll(async () => {
+        const { faker } = await import('@faker-js/faker');
+        randomFirstName = faker.person.firstName();
+        randomLastName = faker.person.lastName();
+        randomNumbner = faker.number.int(50);
+    });
 
     test('Get request', async ({ request }) => {
         const response = await request.get("https://restful-booker.herokuapp.com/booking/2") 
         expect(response.status()).toBe(200);                        
         const body = await response.json();
-        console.log(JSON.stringify(body)); // Prevedie javasceriptový objekt na řetězec JSON a vypíše ho do konzole
+        console.log(JSON.stringify(body));
     });
 
     test('Get request with params @api', async ({ request}) => {
