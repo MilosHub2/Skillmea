@@ -10,7 +10,7 @@ on:
 jobs:
   test:
     strategy:
-        fail-fast: false;             #nastaveni strategie pro beh testu, fail-fast: false zajistuje, ze se vsechny shardy spusti i v pripade, ze nektery z nich selze, coz umoznuje ziskat kompletní obraz o stavu testu a identifikovat vsechny problemy bez ohledu na poradi spusteni
+        fail-fast: false             #nastaveni strategie pro beh testu, fail-fast: false zajistuje, ze se vsechny shardy spusti i v pripade, ze nektery z nich selze, coz umoznuje ziskat kompletní obraz o stavu testu a identifikovat vsechny problemy bez ohledu na poradi spusteni
         matrix:
           shard: [1/4, 2/4, 3/4, 4/4]   #definice matice pro rozdeleni testu do ctyr shardu, kazdy shard bude obsahovat urcitou cast testu pro paralelni beh a zrychleni testovani
     runs-on: ubuntu-latest
