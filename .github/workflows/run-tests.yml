@@ -8,36 +8,66 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  ui-tests:
     strategy:
-        fail-fast: false             #nastaveni strategie pro beh testu, fail-fast: false zajistuje, ze se vsechny shardy spusti i v pripade, ze nektery z nich selze, coz umoznuje ziskat kompletní obraz o stavu testu a identifikovat vsechny problemy bez ohledu na poradi spusteni
-        matrix:
-          shard: [1/4, 2/4, 3/4, 4/4]   #definice matice pro rozdeleni testu do ctyr shardu, kazdy shard bude obsahovat urcitou cast testu pro paralelni beh a zrychleni testovani
+      fail-fast: false
+      matrix:
+        shard: [1/4, 2/4, 3/4, 4/4]
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out project
-        uses: actions/checkout@v5     #checkout projektu z repozitare a jeho zkopirovani do pracovniho adresare pro dalsi kroky
+        uses: actions/checkout@v5
 
       - name: Install Node.js
-        uses: actions/setup-node@v6   #instalace Node.js pro beh testu a puziva akci setup-node, ktera umoznuje nastavit verzi Node.js pro dalsi kroky
+        uses: actions/setup-node@v6
         with:
           node-version: "18"
 
       - name: Clean install the project
-        run: npm ci                           #cista instalace zavislosti projektu z package-lock.json, ktera zajistuje konzistentni instalaci a rychlejsi beh testu
+        run: npm ci
 
       - name: Install Playwright
-        run: npx playwright install          #instalace Playwrightu
+        run: npx playwright install
 
-      - name: Run Playwright tests
+      - name: Run UI Playwright tests
         env:
-            SLACK_BOT_USER_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }}
-        run: npx playwright test  --grep-invert @api --shard ${{ matrix.shard }}                       #spusteni Playwright testu 
+          SLACK_BOT_USER_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }}
+        run: npx playwright test --ignore tests/api.spec.ts --shard ${{ matrix.shard }}
 
-      - uses: actions/upload-artifact@v7
-        if: always()                         #nahrani vysledku testu jako artefakt pro dalsi analyzu, pouziva se akce upload-artifact a podminka always() zajistuje, ze se tento krok provede i v pripade nezdaru testu  
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: playwright-report
+          name: playwright-report-ui-${{ matrix.shard }}
+          path: playwright-report/
+          retention-days: 30
+
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "18"
+
+      - name: Clean install the project
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Run API Playwright tests
+        env:
+          SLACK_BOT_USER_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }}
+        run: npx playwright test --config=api.config.ts tests/api.spec.ts
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-api
           path: playwright-report/
           retention-days: 30
