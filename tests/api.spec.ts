@@ -1,164 +1,148 @@
-import { expect, test } from '@playwright/test';
+import { expect, test} from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
-let token: string;
-let randomFirstName: string;
-let randomLastName: string;
-let randomNumber: number;
+var token;
 
 test.describe('API tests @api', () => {
-  test.beforeAll(async () => {
-    const { faker } = await import('@faker-js/faker');
-    randomFirstName = faker.person.firstName();
-    randomLastName = faker.person.lastName();
-    randomNumber = faker.number.int({ max: 50 });
-  });
 
-  test('Get request', async ({ request }) => {
-    const response = await request.get('/booking/2');
-    expect(response.status()).toBe(200);
+    const randomFirstName = faker.person.firstName();
+    const randomLastName = faker.person.lastName();
+    const randomNumbner = faker.number.int(50);
 
-    const body = await response.json();
-    console.log(body);
-  });
-
-  test('Get request with params @api', async ({ request }) => {
-    const response = await request.get('/booking', {
-      params: {
-        firstname: 'John',
-        lastname: 'Smith',
-      },
+    test('Get request', async ({ request }) => {
+        const response = await request.get("https://restful-booker.herokuapp.com/booking/2") 
+        expect(response.status()).toBe(200);                        
+        const body = await response.json();
+        console.log(JSON.stringify(body)); // Prevedie javasceriptový objekt na řetězec JSON a vypíše ho do konzole
     });
 
-    expect(response.ok()).toBe(true);
-    expect(response.status()).toBe(200);
-
-    const body = await response.json();
-    console.log(body);
-  });
-
-  test('Post - create booking @api', async ({ request }) => {
-    const response = await request.post('/booking', {
-      data: {
-        firstname: 'Jim',
-        lastname: 'Brown',
-        totalprice: 111,
-        depositpaid: true,
-        bookingdates: {
-          checkin: '2018-01-01',
-          checkout: '2019-01-01',
-        },
-        additionalneeds: 'Breakfast',
-      },
+    test('Get request with params @api', async ({ request}) => {
+        const response = await request.get("/booking", {
+            params: {
+                firstname: 'John', 
+                lastname: 'Smith'
+            },
+        });
+        expect(response.ok()).toBeTruthy();
+        expect(response.status()).toBe(200);
+        console.log(await response.json());
     });
 
-    expect(response.ok()).toBe(true);
-    expect(response.status()).toBe(200);
-
-    const responseBody = await response.json();
-    console.log(responseBody);
-
-    expect(responseBody.booking).toHaveProperty('firstname', 'Jim');
-    expect(responseBody.booking).toHaveProperty('lastname', 'Brown');
-    expect(responseBody.booking).toHaveProperty('totalprice', 111);
-  });
-
-  test('Post - dynamic data @api', async ({ request }) => {
-    const response = await request.post('/booking', {
-      data: {
-        firstname: randomFirstName,
-        lastname: randomLastName,
-        totalprice: randomNumber,
-        depositpaid: true,
-        bookingdates: {
-          checkin: '2018-01-01',
-          checkout: '2019-01-01',
-        },
-        additionalneeds: 'Breakfast',
-      },
+    test('Post - create booking @api', async ({ request }) => {
+        const response = await request.post("/booking", {
+            data: {
+                "firstname" : "Jim",
+                "lastname" : "Brown",
+                "totalprice" : 111,
+                "depositpaid" : true,
+                    "bookingdates" : {
+                    "checkin" : "2018-01-01",
+                    "checkout" : "2019-01-01"
+                },
+                "additionalneeds" : "Breakfast"
+            }
+        });
+        console.log(await response.json());
+        expect(response.ok()).toBeTruthy();
+        expect(response.status()).toBe(200);
+        const responseBody = await response.json();
+        expect(responseBody.booking).toHaveProperty("firstname", "Jim");
+        expect(responseBody.booking).toHaveProperty("lastname", "Brown");
+        expect(responseBody.booking).toHaveProperty("totalprice", 111);
     });
 
-    expect(response.ok()).toBe(true);
-    expect(response.status()).toBe(200);
-
-    const responseBody = await response.json();
-    console.log(responseBody);
-
-    expect(responseBody.booking).toHaveProperty('firstname', randomFirstName);
-    expect(responseBody.booking).toHaveProperty('lastname', randomLastName);
-    expect(responseBody.booking).toHaveProperty('totalprice', randomNumber);
-  });
-
-  test('Update the booking details @api', async ({ request }) => {
-    const authResponse = await request.post('/auth', {
-      data: {
-        username: 'admin',
-        password: 'password123',
-      },
+    test('Post - dynamic data @api', async ({ request }) => {
+        const response = await request.post("/booking", {
+            data: {
+                "firstname" : randomFirstName,
+                "lastname" : randomLastName,
+                "totalprice" : randomNumbner,
+                "depositpaid" : true,
+                    "bookingdates" : {
+                    "checkin" : "2018-01-01",
+                    "checkout" : "2019-01-01"
+                },
+                "additionalneeds" : "Breakfast"
+            }
+        });
+        console.log(await response.json());
+        expect(response.ok()).toBeTruthy();
+        expect(response.status()).toBe(200);
+        const responseBody = await response.json();
+        expect(responseBody.booking).toHaveProperty("firstname", randomFirstName);
+        expect(responseBody.booking).toHaveProperty("lastname", randomLastName);
+        expect(responseBody.booking).toHaveProperty("totalprice", randomNumbner);
     });
 
-    expect(authResponse.ok()).toBe(true);
-    expect(authResponse.status()).toBe(200);
+    test('Update the booking detals @api', async ({ request }) => {
+        const response = await request.post("/auth", {
+            data: {
+                "username" : "admin",   
+                "password" : "password123"
+            }
+        });
 
-    const authBody = await authResponse.json();
-    console.log(authBody);
+        console.log(await response.json());
+        expect(response.ok()).toBeTruthy();
+        expect(response.status()).toBe(200);
+        const responseBody = await response.json();
+        token = responseBody.token;
+        console.log("New toke in: " + token);
 
-    token = authBody.token;
-
-    const updateResponse = await request.put('/booking/2', {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Cookie: `token=${token}`,
-      },
-      data: {
-        firstname: 'Jozef',
-        lastname: 'Zak',
-        totalprice: 66,
-        depositpaid: true,
-        bookingdates: {
-          checkin: '2018-01-01',
-          checkout: '2019-01-01',
-        },
-        additionalneeds: 'Breakfast',
-      },
+        const updateRequest = await request.put("/booking/2", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Cookie": `token=${token}`,    // vzdy ked pouzivame nejaku premenu v kuceravych zatvorkach, tak sa musi pouzit backtick ` a nie obycejne navodniky ' alebo "
+            },
+            data: {
+                "firstname" : "Jozef",
+                "lastname" : "Žák",
+                "totalprice" : 66,
+                "depositpaid" : true,
+                    "bookingdates" : {
+                    "checkin" : "2018-01-01",
+                    "checkout" : "2019-01-01"
+                },
+                "additionalneeds" : "Breakfast"
+            }
+        });
+        
+        console.log(await updateRequest.json());
+        expect(updateRequest.ok()).toBeTruthy();
+        expect(updateRequest.status()).toBe(200);
+        const updatedResponseBody = await updateRequest.json();
+        console.log(updatedResponseBody);
+        expect(updatedResponseBody).toHaveProperty("firstname", "Jozef");
+        expect(updatedResponseBody).toHaveProperty("lastname", "Žák");
+        expect(updatedResponseBody).toHaveProperty("totalprice", 66);
     });
 
-    expect(updateResponse.ok()).toBe(true);
-    expect(updateResponse.status()).toBe(200);
+    test('Delete the booking detail @api', async ({ request }) => {
+        const response = await request.post("/auth", {
+            data: {
+                "username" : "admin",   
+                "password" : "password123"
+            }
+        });
 
-    const updatedResponseBody = await updateResponse.json();
-    console.log(updatedResponseBody);
+        console.log(await response.json());
+        expect(response.ok()).toBeTruthy();
+        expect(response.status()).toBe(200);
+        const responseBody = await response.json();
+        token = responseBody.token;
+        console.log("New toke in: " + token);
 
-    expect(updatedResponseBody).toHaveProperty('firstname', 'Jozef');
-    expect(updatedResponseBody).toHaveProperty('lastname', 'Zak');
-    expect(updatedResponseBody).toHaveProperty('totalprice', 66);
-  });
+        const deleteRequest = await request.delete("/booking/3", {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Cookie": `token=${token}`,
+            },
 
-  test('Delete the booking detail @api', async ({ request }) => {
-    const authResponse = await request.post('/auth', {
-      data: {
-        username: 'admin',
-        password: 'password123',
-      },
+        });
+
+        expect(deleteRequest.status()).toBe(201);
+        expect(deleteRequest.statusText()).toBe("Created");
     });
-
-    expect(authResponse.ok()).toBe(true);
-    expect(authResponse.status()).toBe(200);
-
-    const authBody = await authResponse.json();
-    console.log(authBody);
-
-    token = authBody.token;
-
-    const deleteResponse = await request.delete('/booking/3', {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Cookie: `token=${token}`,
-      },
-    });
-
-    expect(deleteResponse.status()).toBe(201);
-    expect(deleteResponse.statusText()).toBe('Created');
-  });
 });
