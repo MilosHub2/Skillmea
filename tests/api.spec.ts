@@ -146,7 +146,7 @@ test.describe('API tests @api', () => {
         expect(deleteRequest.statusText()).toBe("Created");
     });
 
-    test.only('Block requests @api', async ({ page, context }) => {
+    test('Block requests @api', async ({ page, context }) => {
         await context.route(/\.(jpg|png|css)$/, route => route.abort());  //  await context.route s regex kod na blokovanie načítania obrázkov (jpg a png) a route.abort() pro zablokování těchto požadavků
         await page.goto("/");                                           // kzada url s priponou.jpg alebo .png a tieto požadavky budou zablokovány, což může zrychlit načítání stránky a snížit spotřebu dat.
         await page.waitForURL("/");
