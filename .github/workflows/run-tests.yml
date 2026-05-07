@@ -33,7 +33,7 @@ jobs:
       - name: Run Playwright tests
         env:
             SLACK_BOT_USER_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }}
-        run: npx playwright  --grep-invert @api --shard ${{ matrix.shard }}                       #spusteni Playwright testu 
+        run: npx playwright test  --grep-invert @api --shard ${{ matrix.shard }}                       #spusteni Playwright testu 
 
       - uses: actions/upload-artifact@v7
         if: always()                         #nahrani vysledku testu jako artefakt pro dalsi analyzu, pouziva se akce upload-artifact a podminka always() zajistuje, ze se tento krok provede i v pripade nezdaru testu  
