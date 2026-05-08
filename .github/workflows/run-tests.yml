@@ -46,7 +46,7 @@ jobs:
         if: always()                         #nahrani blob reportu jako artefakt pro dalsi analyzu, pouziva se akce upload-artifact a podminka always() zajistuje, ze se tento krok provede i v pripade nezdaru testu
         uses: actions/upload-artifact@v4
         with:
-          name: all-blob-reports
+          name: all-blob-reports -${{ matrix.shard }}
           path: blob-report
           retention-days: 1    
 
@@ -70,7 +70,6 @@ jobs:
         with:
           path: all-blob-reports
           pattern: blob-report-*
-          merge-multiple: true
 
       - name: Merge into HTML Report
         run: npx playwright merge-reports --reporter html ./all-blob-reports
