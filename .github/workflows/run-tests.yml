@@ -65,6 +65,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Clean report directories
+        run: |
+          rm -rf all-blob-reports
+          rm -rf blob-report
+          rm -rf playwright-report      
+
       - name: Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v5
         with:
