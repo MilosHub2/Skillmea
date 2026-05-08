@@ -30,7 +30,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
+  reporter: process.env.CI ? 'blob' : [               //nastaveni reporteru pro testy, pokud je spuštěno v prostředí CI(github,gitlab,jenkinks), použije se blob reporter pro shromažďování výsledků testů, jinak se použije kombinace html, allure-playwright a json reporterů pro generování různých formátů reportů a odesílání výsledků do Slacku
   ['html', { open: 'always' }],   // HTML report, nemusí sa automaticky otvárať
   ['allure-playwright'],  
   ['json', { outputFile: 'test-results.json' }],  // JSON report do súboru
