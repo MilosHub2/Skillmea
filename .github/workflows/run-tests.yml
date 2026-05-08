@@ -70,6 +70,7 @@ jobs:
         with:
           path: all-blob-reports
           pattern: all-blob-reports-*
+          merge-multiple: true
 
       - name: Merge into HTML Report
         run: npx playwright merge-reports --reporter html ./all-blob-reports
