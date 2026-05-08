@@ -13,7 +13,7 @@ test.describe('API tests @api', () => {
         randomNumbner = faker.number.int(50);
     });
 
-    test('Get request', async ({ request }) => {
+    test('Get request @api', async ({ request }) => {
         const response = await request.get("https://restful-booker.herokuapp.com/booking/2") 
         expect(response.status()).toBe(200);                        
         const body = await response.json();
