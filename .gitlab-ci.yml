@@ -1,0 +1,8 @@
+  stages:
+    - test
+  e2e:
+    stage: test
+    image: mcr.microsoft.com/playwright:latest¨
+    script:
+      - npm ci
+      - npx playwright test --grep-invert @api
